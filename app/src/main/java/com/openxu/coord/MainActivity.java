@@ -1,6 +1,7 @@
 package com.openxu.coord;
 
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -32,6 +33,25 @@ public class MainActivity extends AppCompatActivity implements HeaderPagerBehavi
         sliding_content = (FixedLinearLayout) findViewById(R.id.sliding_content);
         setViewPagerScrollEnable(mNewsPager,false);
 
+    }
+
+    @Override
+    public void onPagerClosed() {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "onPagerClosed: ");
+        }
+        Snackbar.make(mNewsPager, "pager closed", Snackbar.LENGTH_SHORT).show();
+        setFragmentRefreshEnabled(true);
+        setViewPagerScrollEnable(mNewsPager,true);
+    }
+
+
+
+    @Override
+    public void onPagerOpened() {
+        Snackbar.make(mNewsPager, "pager opened", Snackbar.LENGTH_SHORT).show();
+        setFragmentRefreshEnabled(false);
+        setViewPagerScrollEnable(mNewsPager,false);
     }
 
     public void setViewPagerScrollEnable(ViewPager viewPager,boolean enable){
